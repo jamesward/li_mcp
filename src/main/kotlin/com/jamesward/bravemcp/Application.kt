@@ -10,12 +10,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.ConcurrentHashMap
 
 
 @SpringBootApplication
 @EnableConfigurationProperties(LIProperties::class)
+@RestController
 class Application(val page: Page) {
 
     private val log = LoggerFactory.getLogger(Application::class.java)
@@ -66,6 +71,13 @@ class Application(val page: Page) {
         page.waitForSelector(".search-results-container").innerText()
     }
 
+    @GetMapping("/current", produces = [MediaType.IMAGE_PNG_VALUE])
+    fun currentPage(): ResponseEntity<ByteArray> = run {
+        ResponseEntity.ok()
+            .contentType(MediaType.IMAGE_PNG)
+            .body(page.screenshot())
+    }
+
 }
 
 @Component
@@ -82,6 +94,8 @@ class LI(private val liProperties: LIProperties) {
         val page: Page = browser.newPage()
 
         page.navigate("https://www.linkedin.com/login")
+        page.waitForLoadState()
+        /*
         // Wait for login form to load
         page.waitForSelector("#username")
         // Fill in credentials
@@ -90,6 +104,7 @@ class LI(private val liProperties: LIProperties) {
         // Submit the form
         page.click("button[type='submit']")
         page.waitForURL("https://www.linkedin.com/feed/")
+         */
 
         page
     }
