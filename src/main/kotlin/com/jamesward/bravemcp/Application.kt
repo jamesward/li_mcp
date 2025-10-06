@@ -39,6 +39,11 @@ class Application(val page: Page) {
         return value
     }
 
+    @McpTool
+    fun debugNavigate(path: String) {
+        page.navigate("https://linkedin.com$path")
+    }
+
     @McpTool(description = "get a person's profile")
     fun personProfile(
         @McpToolParam(description = "the username from https://linkedin.com/in/{username}") username: String
@@ -95,7 +100,7 @@ class LI(private val liProperties: LIProperties) {
 
         page.navigate("https://www.linkedin.com/login")
         page.waitForLoadState()
-        /*
+
         // Wait for login form to load
         page.waitForSelector("#username")
         // Fill in credentials
@@ -103,8 +108,8 @@ class LI(private val liProperties: LIProperties) {
         page.fill("#password", liProperties.password)
         // Submit the form
         page.click("button[type='submit']")
-        page.waitForURL("https://www.linkedin.com/feed/")
-         */
+
+        //page.waitForURL("https://www.linkedin.com/feed/")
 
         page
     }
