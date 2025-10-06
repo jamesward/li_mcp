@@ -32,3 +32,19 @@ dependencyManagement {
 tasks.named<Jar>("jar") {
     enabled = false
 }
+
+tasks.register<JavaExec>("installChromiumDeps") {
+    mainClass = "com.microsoft.playwright.CLI"
+    args = listOf("install-deps", "chromium")
+    classpath = sourceSets["main"].runtimeClasspath
+}
+
+tasks.register<JavaExec>("installChromium") {
+    mainClass = "com.microsoft.playwright.CLI"
+    args = listOf("install", "chromium")
+    classpath = sourceSets["main"].runtimeClasspath
+}
+
+tasks.named("assemble").configure {
+    dependsOn("installChromiumDeps", "installChromium")
+}
