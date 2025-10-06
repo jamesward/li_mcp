@@ -33,18 +33,21 @@ tasks.named<Jar>("jar") {
     enabled = false
 }
 
+/*
 tasks.register<JavaExec>("installChromiumDeps") {
     mainClass = "com.microsoft.playwright.CLI"
     args = listOf("install-deps", "chromium")
     classpath = sourceSets["main"].runtimeClasspath
 }
+ */
 
 tasks.register<JavaExec>("installChromium") {
+//    dependsOn("installChromiumDeps")
     mainClass = "com.microsoft.playwright.CLI"
-    args = listOf("install", "chromium")
+    args = listOf("install", "--with-deps", "--only-shell") //install", "chromium")
     classpath = sourceSets["main"].runtimeClasspath
 }
 
 tasks.named("assemble").configure {
-    dependsOn("installChromiumDeps", "installChromium")
+    dependsOn("installChromium")
 }
