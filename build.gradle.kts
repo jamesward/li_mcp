@@ -44,7 +44,7 @@ tasks.register<JavaExec>("installChromiumDeps") {
 tasks.register<JavaExec>("installChromium") {
 //    dependsOn("installChromiumDeps")
     mainClass = "com.microsoft.playwright.CLI"
-    args = listOf("install", "--with-deps", "--only-shell") //install", "chromium")
+    args = listOf("install", "--only-shell") //--with-deps", "--only-shell") //install", "chromium")
     classpath = sourceSets["main"].runtimeClasspath
 }
 
