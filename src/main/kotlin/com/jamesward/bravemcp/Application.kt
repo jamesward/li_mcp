@@ -76,7 +76,7 @@ class LI(private val liProperties: LIProperties) {
     fun browserPage(): Page = run {
         val playwright = Playwright.create()
 //       val browser = playwright.chromium().connect("ws://localhost:3000")
-        val launchOptions = BrowserType.LaunchOptions().setHeadless(true)
+        val launchOptions = BrowserType.LaunchOptions().setHeadless(liProperties.headless)
         val browser = playwright.chromium().launch(launchOptions)
         val page: Page = browser.newPage()
 

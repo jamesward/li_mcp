@@ -6,4 +6,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 data class LIProperties(
     val username: String,
     val password: String,
+    val headless: Boolean = false,
 )
